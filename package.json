@@ -6,8 +6,8 @@
   "repository": "git@github.com:godber/asg-yarn-npm-test.git",
   "author": "Austin Godber <godber@uberhip.com>",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "prompts": "^2.4.2"
-  }
+  },
+  "packageManager": "yarn@3.5.1"
 }
