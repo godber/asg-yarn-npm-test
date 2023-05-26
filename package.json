@@ -8,6 +8,5 @@
   "license": "MIT",
   "dependencies": {
     "prompts": "^2.4.2"
-  },
-  "packageManager": "yarn@3.5.1"
+  }
 }
