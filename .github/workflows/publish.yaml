@@ -24,7 +24,5 @@ jobs:
       - run: mkdir build; yarn pack -f build/asg-yarn-npm.tgz
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: |
-            build/*.tgz
+          files: build/*.tgz
