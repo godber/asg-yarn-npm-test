@@ -27,7 +27,7 @@ jobs:
             yarn install
             yarn run build
       - name: Check documentation
-        run: find .
+        run: find ./website/build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
