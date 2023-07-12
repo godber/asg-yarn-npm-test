@@ -1,9 +1,9 @@
-name: Publish Teraslice NPM Packages, Documents and Docker Image
+name: Build and publish Docusaurus Docs
 
 on:
   pull_request:
     branches:
-      - master
+      - main
     # types:
     #   - closed
 
