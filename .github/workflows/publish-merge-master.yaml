@@ -21,8 +21,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
 
-      - name: Build documentation
-        run: cd website && yarn run build
+      - name: Install dependencies and build documents
+        run: |
+            cd website
+            yarn install
+            yarn run build
       - name: Check documentation
         run: find .
       - name: Upload artifact
