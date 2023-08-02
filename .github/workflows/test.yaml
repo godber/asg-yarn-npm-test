@@ -27,3 +27,6 @@ jobs:
       - run: printenv
       - run: |
             echo "NODE VERSIONS: $NODE_VERSIONS"
+            for version in ${NODE_VERSIONS[@]}; do
+              echo $version
+            done
