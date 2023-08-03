@@ -19,15 +19,20 @@ jobs:
     - id: set-matrix
       run: echo "::set-output name=matrix::$NODE_VERSIONS"
 
+  check:
+    needs:
+      setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{needs.setup.outputs.matrix}}
+      - run: echo ${{fromJson(needs.setup.outputs.matrix)}}
+
   build:
     needs:
       setup
-
     runs-on: ubuntu-latest
-
     strategy:
-      matrix: ${{fromJson(needs.setup.outputs.matrix)}}
-
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
