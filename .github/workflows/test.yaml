@@ -24,8 +24,10 @@ jobs:
       setup
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{needs.setup.outputs.matrix}}
-      - run: echo ${{fromJson(needs.setup.outputs.matrix)}}
+      - name: "echo without fromJson()"
+        run: echo ${{needs.setup.outputs.matrix}}
+      - name: "echo with fromJson()"
+        run: echo ${{fromJson(needs.setup.outputs.matrix)}}
 
   build:
     needs:
