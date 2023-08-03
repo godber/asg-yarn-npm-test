@@ -9,13 +9,24 @@ env:
     NODE_VERSIONS: ${{ vars.NODE_VERSIONS }}
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - run: |
+        echo "NODE VERSIONS: $NODE_VERSIONS"
+    - id: set-matrix
+      run: echo "::set-output name=matrix::$NODE_VERSIONS"
+
   build:
+    needs:
+      setup
 
     runs-on: ubuntu-latest
 
     strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x, 20.x]
+      matrix: ${{fromJson(needs.setup.outputs.matrix)}}
 
     steps:
       - uses: actions/checkout@v3
@@ -25,8 +36,3 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn test
       - run: printenv
-      - run: |
-            echo "NODE VERSIONS: $NODE_VERSIONS"
-            for version in ${NODE_VERSIONS[@]}; do
-              echo $version
-            done
