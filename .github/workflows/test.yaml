@@ -6,18 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 env:
-    NODE_VERSIONS: ${{ vars.NODE_VERSIONS }}
+    MATRIX: ${{ vars.MATRIX }}
 
 jobs:
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - run: |
-        echo "NODE VERSIONS: $NODE_VERSIONS"
-    - id: set-matrix
-      run: echo "::set-output name=matrix::{\"node-version\":[\"14\",\"20\"]}"
+      - run: echo $MATRIX
+      - run: |
+          echo "MATRIX: $MATRIX" >> $GITHUB_OUTPUT
+    outputs:
+      matrix: ${{ toJson(steps.*.outputs.matrix) }}
+
 
   build:
     needs:
