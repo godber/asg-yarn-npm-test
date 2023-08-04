@@ -17,21 +17,7 @@ jobs:
     - run: |
         echo "NODE VERSIONS: $NODE_VERSIONS"
     - id: set-matrix
-      run: echo "::set-output name=matrix::$NODE_VERSIONS"
-
-  check:
-    needs:
-      setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: "echo without fromJson()"
-        run: echo ${{needs.setup.outputs.matrix}}
-      - name: "echo with fromJson()"
-        run: echo ${{fromJson(needs.setup.outputs.matrix)}}
-      - name: "echo without fromJson() through jq"
-        run: echo ${{needs.setup.outputs.matrix}} | jq .
-      - name: "echo with fromJson() through jq"
-        run: echo ${{fromJson(needs.setup.outputs.matrix)}} | jq .
+      run: echo "::set-output name=matrix::{\"node-version\":[\"14\",\"20\"]}"
 
   build:
     needs:
