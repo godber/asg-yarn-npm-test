@@ -12,7 +12,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - run: printenv
+      # - run: printenv
       - run: echo $MATRIX
       # - run: echo $MATRIX | jq .
       - run: echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
@@ -23,8 +23,18 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       setup
-    strategy:
-      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    # strategy:
+    #   matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    steps:
+      - name: echo
+        run: echo ${{ needs.setup.outputs.matrix }}
+      - name: echo fromJson
+        run: echo ${{ fromJson(needs.setup.outputs.matrix) }}
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      # - run: node -v
 
   # build:
   #   needs:
