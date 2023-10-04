@@ -1,0 +1,48 @@
+name: Build and publish Docusaurus Docs
+
+on:
+  pull_request:
+    branches:
+      - main
+    # types:
+    #   - closed
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version:  18.16.0
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
+      - name: Install dependencies and build documents
+        run: |
+            cd website
+            yarn install
+            yarn run build
+      - name: Check documentation
+        run: find ./website/build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./website/build/asg-yarn-npm-test
+
+  publish-docs:
+    runs-on: ubuntu-latest
+    needs: build-docs
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
