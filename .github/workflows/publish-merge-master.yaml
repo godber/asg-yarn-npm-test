@@ -8,41 +8,15 @@ on:
     #   - closed
 
 jobs:
-  build-docs:
+  check-yarn-install:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.20.2, 18.18.2]
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup Node
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version:  18.16.0
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
-
-      - name: Install dependencies and build documents
-        run: |
-            cd website
-            yarn install
-            yarn run build
-      - name: Check documentation
-        run: find ./website/build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: ./website/build/asg-yarn-npm-test
-
-  publish-docs:
-    runs-on: ubuntu-latest
-    needs: build-docs
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+          node-version: ${{ matrix.node-version }}
+      - run: yarn global add teraslice-cli
+      - run: yarn list
