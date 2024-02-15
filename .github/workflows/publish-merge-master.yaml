@@ -11,6 +11,7 @@ jobs:
   check-yarn-install:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [16.20.2, 18.18.2]
     steps:
